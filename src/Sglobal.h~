@@ -1,0 +1,148 @@
+#ifndef SGLOBAL_H
+#define SGLOBAL_H
+
+#include <SDL\SDL.h>
+#include "SDL/SDL_mixer.h"
+#include <string>
+#include "global.h"
+//int GLOBAL_TIME=0;
+
+//enum TileType{t_nonsolid=0, t_solid, t_slopeleft, t_sloperight};
+int k=0;
+
+typedef const int freez; /* da bi bilo lakse za pisanje napravio sam novi tip podataka 
+kao zamenu za const int
+ */
+ 
+bool allow=true;
+int x=0;
+int y=0;
+
+bool col_check=false;
+bool h=true;
+
+bool co_col=false;
+
+SDL_Rect thorn ={ 3*50,52*50+11,1350,39};
+
+freez COLLISION_LEFT=45;
+freez COLLISION_TOP=46;
+freez COLLISION_RIGHT=47;
+freez COLLISION_BOTTOM=48;
+
+
+//sve slike
+SDL_Surface* spr_height;
+SDL_Surface* spr_finish_line;
+SDL_Surface* spr_game_over;
+SDL_Surface* spr_game_win;
+SDL_Surface* spr_head1;
+SDL_Surface* spr_head2;
+SDL_Surface* spr_head3;
+SDL_Surface* spr_dead;
+SDL_Surface* spr_svetlost;
+SDL_Surface* spr_zeleno;
+SDL_Surface* spr_crveno;
+SDL_Surface* spr_dugme;
+SDL_Surface* spr_dugme_pr;
+SDL_Surface* spr_emiter1;	
+SDL_Surface* spr_emiter2;	
+SDL_Surface* spr_bar;	
+SDL_Surface* spr_player;
+SDL_Surface* spr_boolet_right;	
+SDL_Surface* spr_boolet_left;
+SDL_Surface* spr_shit;
+SDL_Surface* spr_enemy1;
+SDL_Surface* spr_enemy2;
+SDL_Surface* spr_enemy3;
+SDL_Surface* spr_enemy1_red;
+SDL_Surface* spr_enemy2_red;
+SDL_Surface* spr_enemy3_red;
+SDL_Surface* spr_enemy1_smart_red;
+SDL_Surface* spr_enemy2_smart_red;
+SDL_Surface* spr_enemy3_smart_red;
+SDL_Surface* spr_enemy1_smart;
+SDL_Surface* spr_enemy2_smart;
+SDL_Surface* spr_enemy3_smart;
+SDL_Surface* spr_enemy_shoot=NULL;
+SDL_Surface* spr_light_bar;	
+SDL_Surface* spr_background;
+
+SDL_Surface* spr_boolet;
+SDL_Surface* spr_stefan;
+SDL_Surface* spr_lift_long_upright;
+SDL_Surface* spr_lift_medium;
+SDL_Surface* spr_lift_fat;
+SDL_Surface* spr_sekac;
+SDL_Surface* spr_short;
+SDL_Surface* spr_thorns;
+
+
+SDL_Surface* spr_lift_long;
+SDL_Surface* spr_ball[360];
+SDL_Surface* spr_pushing_enemy[2][3];
+SDL_Surface* spr_t[15];
+SDL_Surface* spr_player_left[8];
+SDL_Surface* spr_player_skija[2];	
+SDL_Surface* spr_player_right[8];
+SDL_Surface* spr_light[21];	
+SDL_Surface* spr_dugmad[3];	
+SDL_Surface* spr_height_max[107];	
+
+
+//sva muzika
+Mix_Chunk *gun = NULL;
+Mix_Chunk *boink = NULL;
+Mix_Chunk *beep = NULL;
+Mix_Chunk *a = NULL;
+Mix_Chunk *kraj = NULL;
+Mix_Chunk *loser = NULL;
+Mix_Chunk *zap = NULL;
+Mix_Chunk *button_sound = NULL;
+
+
+
+	
+
+
+freez t_nonsolid=0;
+freez t_solid=1;
+freez t_toponly=2;
+freez t_jumpwall=3;
+freez t_ice=4;
+
+
+
+
+int veljump=0;
+int xtime=0;
+int light_count=0;
+int button_count=0;
+int lives=3;
+int dead_count=0;
+int height_count=0;
+
+
+
+
+bool W_RIGHT=false;
+bool W_LEFT=false;
+bool beam=true;
+bool done;
+bool living=true;
+bool win=false;
+bool playable_a=true;
+bool playable_kraj=true;
+bool playable_loser=true;
+bool r=true;
+	
+
+bool check_collision( SDL_Rect A, SDL_Rect B );
+
+float VELMOVING=4;		
+float VELJUMP=15;		
+
+SDL_Rect bar = {350,800,550,33};
+SDL_Rect over_line = {0-camera.x,0-camera.y,115,115};
+
+#endif
