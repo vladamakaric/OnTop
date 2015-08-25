@@ -359,13 +359,13 @@ void CPlayer::think()
          {
             if(GLOBAL_TIME%200==0)
             {
-                velx*=0.9;
+                // velx*=0.9;
             }
          }
          else
          {
-             if(GLOBAL_TIME%friction==0)
-         velx*=0.9;
+             // if(GLOBAL_TIME%friction==0)
+				//  velx*=0.9;
          }
 
 
