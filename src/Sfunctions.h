@@ -19,7 +19,7 @@ SDL_Surface *load_image_ck_black( std::string filename )
       SDL_FreeSurface( loadedImage );// ovde odbacujemo obicnu sliku jel nam vise netreba
       if( optimizedImage != NULL )
       {//ovde se podesava transparencija i boja koja se nece videti u mom slucaju roza (255,0,255)
-         SDL_SetColorKey( optimizedImage, SDL_SRCCOLORKEY, SDL_MapRGB( optimizedImage->format, 255, 255, 255 ) ); 
+         SDL_SetColorKey( optimizedImage, SDL_SRCCOLORKEY, SDL_MapRGB( optimizedImage->format, 0, 0, 0 ) ); 
       }
    }
     return optimizedImage;
@@ -200,7 +200,7 @@ void check_cool_push_collision( SDL_Rect &A, SDL_Rect &B ,CPlayer &player,pushin
 SDL_Surface *create_transparent_image(SDL_Surface *image)//transparencija crne slike
 {
    SDL_Surface *transparent;
-  SDL_SetColorKey( image, SDL_SRCCOLORKEY, SDL_MapRGB( image->format, 256, 256, 256 ) );
+  SDL_SetColorKey( image, SDL_SRCCOLORKEY, SDL_MapRGB( image->format, 0, 0, 0 ) );
    return image;
 }
 
@@ -215,6 +215,7 @@ void load_roll()//ucitavanje lopte i rotiranje u memoriji
       spr_ball[q]=rotozoomSurface(temp_ball,q,1,0);
       create_transparent_image(spr_ball[q]); 
    }
+
    spr_ball[0]=rotozoomSurface(spr_ball[180],180,1,0);
    create_transparent_image(spr_ball[0]);
 }

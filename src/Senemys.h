@@ -290,6 +290,17 @@ void rolling_enemy::think()
           speed=0;
           roll=false;   
        }
+
+
+	   
+	   if(abs(speed)>7){
+
+		   if(speed<0)
+			   speed = -7;
+		   else
+			   speed = 7;
+	   }
+
        box.x+=speed;
     }    
 }

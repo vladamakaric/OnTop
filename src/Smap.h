@@ -45,7 +45,6 @@ class SMap
 	    STile tiles[MAPWIDTH][MAPHEIGHT];
 }mapy;
 
-
 //////////////////////////////////////////////////
 // razvrstavanje tajlova po vrsti
 ///////////////////////////////////////////////////
@@ -67,7 +66,6 @@ void SMap::loadMap(const char *file)
 	map.close();
 }
 
-
 //iscrtavanje ble
 void SMap::draw()
 {
@@ -82,11 +80,9 @@ void SMap::draw()
         {
 			if(tiles[i][j].spr != NULL)
             {
-				
 			    box.x=i*TILESIZE;   
 			    box.y=j*TILESIZE;
 
-			    
 			    if (check_collision(box,camera))
 				   apply_surface(box.x-camera.x, box.y-camera.y,tiles[i][j].spr,screen);
             }
