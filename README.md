@@ -1,7 +1,13 @@
 # OnTop
+
+![Alt text](/../screenshots/img/s1.png?raw=true "Optional Title")
+
 This game was created in 2009 for the national (Serbian), elementary school programming competition. I was in the eight grade and won first place.
 
 The game is a 2D side scrolling platform game. I drew all the graphics with crayons. This was the first large project I did in C++.
+
+![Alt text](/../screenshots/img/screens.png?raw=true "Optional Title")
+
 
 ##Controls
  - LEFT/RIGHT arrow: move left/right
