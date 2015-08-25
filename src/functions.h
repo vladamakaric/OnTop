@@ -78,7 +78,7 @@ bool init()
     }
 
 
-    screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_FULLSCREEN );//ovde se startuje SDL program
+    screen = SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_HWSURFACE );//ovde se startuje SDL program
     Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ); 
 
     if( screen == NULL )
