@@ -23,6 +23,8 @@ class CPlayer
 		
 		bool faceright;		//grafika desno
 
+		int switchInAirDir;
+
 		bool lockjump;		
 		bool jumping;
         int airx;
@@ -54,6 +56,7 @@ CPlayer::CPlayer()
 
 	velx	= 0;		
 	vely	= 0;
+	switchInAirDir = 0;
 	
 	ON_GROUND=false;
 
@@ -66,7 +69,10 @@ CPlayer::CPlayer()
 }
 
 void CPlayer::unlockjump()
-{		//ova funkcija je pozvana kada igra dotakne zemlju
+{		
+	
+	switchInAirDir = 0;
+	//ova funkcija je pozvana kada igra dotakne zemlju
 	if(!jumping || !keystates[SDLK_RSHIFT]){
 		lockjump = false;
 		jumping = false;
@@ -170,6 +176,7 @@ void CPlayer::handle_events()
          {
 
 			VELMOVING = abs(velx);
+
 			if(VELMOVING<4)
 				VELMOVING = 4;
 			
@@ -222,10 +229,6 @@ void CPlayer::collision_detection_map()
               allow=false;
             }
               
-              
-              
-        
-              
               if (GLOBAL_TIME%30==0)
             {
                
@@ -256,7 +259,6 @@ void CPlayer::collision_detection_map()
         {	
 			box.x = tilecoord*TILESIZE -w-1;
 			VELMOVING=5;
-				velx=0;
         }
 		else
         {		
@@ -272,7 +274,6 @@ void CPlayer::collision_detection_map()
         {	
 			box.x = (tilecoord+1)*TILESIZE +1;	
 				VELMOVING=5;
-				velx=0;
         }		//pomera se do ivice tajla
 		else
         {
@@ -357,13 +358,13 @@ void CPlayer::think()
          if(box.x>LEVEL_WIDTH-20)
          {
             VELMOVING=5;
-            box.x=box.x-velx;
+            box.x=LEVEL_WIDTH-20;
          }
      
          if(box.x<10)
          {
         	VELMOVING=5;
-            box.x=box.x-velx;
+            box.x=10;
          }
 
 	     xtime++;
@@ -393,8 +394,9 @@ void CPlayer::think()
 	    if(keystates[SDLK_RIGHT])///desno
         {
 
-			 if(!faceright && lockjump)
-			 	VELMOVING = 4;
+			 if(!faceright && lockjump){
+				 switchInAirDir = 1;
+			 }
 
 			if(!lockjump)
 		   velx += 2.0;		
@@ -410,7 +412,7 @@ void CPlayer::think()
         {  
 
 			 if(faceright && lockjump)
-			 	VELMOVING = 4;
+				 switchInAirDir = -1;
 
 			// if(faceright && VELMOVING>5)
 			// 	VELMOVING *= 0.5;
@@ -456,6 +458,15 @@ void CPlayer::think()
 
 }
 	collision_detection_map();
+
+	int maxLatAirSpeed = 4;
+
+	if(switchInAirDir && lockjump){
+		if(switchInAirDir == 1 && velx > maxLatAirSpeed)
+			velx = maxLatAirSpeed;
+		else if (velx < -maxLatAirSpeed)
+			velx = -maxLatAirSpeed;
+	}
 
 		 if(abs(velx)>VELMOVING)
 			 velx = VELMOVING*sign(velx);
