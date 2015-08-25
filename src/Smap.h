@@ -73,14 +73,19 @@ void SMap::draw()
 {
 	int i, j;
     SDL_Rect box;
+	box.w = TILESIZE;
+	box.h = TILESIZE;
+
 	for(i = 0; i < MAPWIDTH; i++)
     {
 		for(j = 0; j < MAPHEIGHT; j++)
         {
 			if(tiles[i][j].spr != NULL)
             {
+				
 			    box.x=i*TILESIZE;   
 			    box.y=j*TILESIZE;
+
 			    
 			    if (check_collision(box,camera))
 				   apply_surface(box.x-camera.x, box.y-camera.y,tiles[i][j].spr,screen);
