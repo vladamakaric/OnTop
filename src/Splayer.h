@@ -168,6 +168,11 @@ void CPlayer::handle_events()
       {
          if( event.key.keysym.sym==SDLK_SPACE && !lockjump )
          {
+
+			VELMOVING = abs(velx);
+			if(VELMOVING<4)
+				VELMOVING = 4;
+			
             ON_GROUND==false;	
             vely = -VELJUMP;		
 		    lockjump = true;
@@ -251,6 +256,7 @@ void CPlayer::collision_detection_map()
         {	
 			box.x = tilecoord*TILESIZE -w-1;
 			VELMOVING=5;
+				velx=0;
         }
 		else
         {		
@@ -266,6 +272,7 @@ void CPlayer::collision_detection_map()
         {	
 			box.x = (tilecoord+1)*TILESIZE +1;	
 				VELMOVING=5;
+				velx=0;
         }		//pomera se do ivice tajla
 		else
         {
@@ -329,6 +336,9 @@ void CPlayer::collision_detection_map()
 }       
 }
 
+double sign(double x){
+	return (x > 0) - (x < 0);
+}
 
 void CPlayer::think()
 {
@@ -336,6 +346,9 @@ void CPlayer::think()
      float tempvelx;
      if (win==false && living==true)
      {
+
+
+
          if (abs(vely)>-1)
          {
             ON_GROUND=false;
@@ -359,13 +372,13 @@ void CPlayer::think()
          {
             if(GLOBAL_TIME%200==0)
             {
-                // velx*=0.9;
+                 velx*=0.9;
             }
          }
          else
          {
-             // if(GLOBAL_TIME%friction==0)
-				//  velx*=0.9;
+              if(GLOBAL_TIME%friction==0)
+				  velx*=0.9;
          }
 
 
@@ -375,13 +388,19 @@ void CPlayer::think()
 //////////////////////////////////////////////////////////////////////////////////
 // ovde se obradjuju pritisci na dugmad koji kontrolisu igraca
 //////////////////////////////////////////////////////////////////////////////////
-        if(VELMOVING>24)
-        VELMOVING=24;
 
 
 	    if(keystates[SDLK_RIGHT])///desno
         {
-		   velx = VELMOVING;		
+
+			 if(!faceright && lockjump)
+			 	VELMOVING = 4;
+
+			if(!lockjump)
+		   velx += 2.0;		
+			else
+		   velx += 1.0;		
+
 		   faceright = true;	
            W_RIGHT=true;
 	    } 
@@ -389,7 +408,18 @@ void CPlayer::think()
 	
 	    if(keystates[SDLK_LEFT])//levo
         {  
-           velx = -VELMOVING;
+
+			 if(faceright && lockjump)
+			 	VELMOVING = 4;
+
+			// if(faceright && VELMOVING>5)
+			// 	VELMOVING *= 0.5;
+
+
+			if(!lockjump)
+           velx -= 2.0;
+			else
+           velx -= 1.0;
 		   faceright = false;	
            W_LEFT=true;
 	    }
@@ -397,32 +427,38 @@ void CPlayer::think()
 	
 
 
-	    if(keystates[SDLK_LCTRL] && (W_LEFT==true || W_RIGHT==true))//trcanje
+	    if(keystates[SDLK_LCTRL] && !lockjump && (W_LEFT==true || W_RIGHT==true))//trcanje
         {                        
-            if (lockjump==false) // naravno igrac jedino moze da trci ako je na podu
-            {
-               if (VELMOVING<10)        // mora da se ogrannici brzina                
+
+               if (VELMOVING<13)        // mora da se ogrannici brzina                
                {            
                    VELMOVING+=1;
                }
-                   if (VELJUMP<25 )                       
-                   {
-                      if(GLOBAL_TIME%3==0)
-                         VELJUMP+=1;
-                   }
-               }                           	
-	        }
-	        else
-	       {
-            if (VELMOVING > 4)
-            {VELMOVING-=1;}
-       
-            if (VELJUMP>15)                       
-            {VELJUMP-=1;}
-           }
+
+			   if (VELJUMP<25 )                       
+			   {
+				  if(GLOBAL_TIME%3==0)
+					 VELJUMP+=1;
+			   }
+                                          	
+		}
+		else if(!lockjump)
+	   {
+			if (VELMOVING > 4)
+			{VELMOVING-=1;}
+			else 
+				VELMOVING = 4;
+	   
+			if (VELJUMP>15)                       
+			{VELJUMP-=1;}
+		   
+	   }
+
 }
 	collision_detection_map();
 
+		 if(abs(velx)>VELMOVING)
+			 velx = VELMOVING*sign(velx);
 }
 
 void CPlayer::set_camera()
